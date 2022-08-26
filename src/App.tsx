@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar/Navbar';
+import { Login } from './pages/Login';
+import Main from './pages/Main';
+import './Sass/App.scss'
 
 function App() {
+  const [logged,setLogged] =useState(false)
+  const [display,setDisplay] =useState({'name':'','id':''})
+  const [token,setToken] = useState('')
+   useEffect(()=>{
+      const tokken = JSON.parse(localStorage.getItem('token')|| '{}')
+       setToken(tokken)
+       
+   },[logged,display])
+  
+  
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    
+    <Navbar />
+    <BrowserRouter>
+    <Routes>
+      <Route path='/' element={<Login setLogged={setLogged} logged={logged}/>}/>  
+      <Route path='/lokkeroom' element={<Main  display={display} setDisplay={setDisplay} setLogged={setLogged} token={token}  />} />
+    </Routes>
+    </BrowserRouter>
+    
+   
+    </>
   );
 }
 
