@@ -34,7 +34,6 @@ export const Register:React.FC<Props> = ({setIsShown}) => {
             <input type="text" placeholder='name' name='name' value={formValue.name} onChange={handleChange}/>
             <input type="text" placeholder='email' name='email' value={formValue.email} onChange={handleChange}/>
             <input type="password" placeholder='password' name='password' value={formValue.password} onChange={handleChange} />
-           
             <button type='submit'>register</button>
         </form>
         

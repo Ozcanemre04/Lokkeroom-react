@@ -1,0 +1,31 @@
+@import './variables.scss';
+
+
+.main{
+    @include display(flex,row,space-between,flex-start);
+    width:100%;
+    
+    
+}
+
+.left-side{
+    
+    width: 20%;
+    border-right: 1px solid black;
+    height: 644px;
+    background-color: $light;
+    .left-header{
+        @include display(flex,row,space-between,center);
+        border-bottom: 1px solid black;
+        padding: 10px;
+        color: $lighter;
+        button{
+            background-color: $dark;
+            color: $lighter;
+            padding: 5px;
+            width: 50px;
+            border: none;
+            border-radius: 5px;
+        }
+    }
+}

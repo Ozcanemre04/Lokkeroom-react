@@ -1,80 +1,11 @@
+@import './Navbar.scss';
+@import './Register.scss';
+@import './Login.scss';
+@import './Left-side.scss';
+@import './Right-side.scss';
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-header{
-    text-align: center;
-    background-color: blue;
-    width: 100%;
-    padding: 20px;
-}
-.register { 
-    width: 100%;
-    
-    .close{
-        width: 100%;
-        outline: none;
-        border: none;
-        text-align: end;
-        background-color: white;
-        padding: 5px;
-        margin-right: 3px;
-        font-size: large;
-    }
-    form{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 500px;
-        input{
-            margin: 10px 0 10px 0;
-            padding: 5px;
-            width: 150px;
-        }
-        
-    }
-}
-.modal{
-    position: absolute;
-    right: 50%;
-    transform: translateX(45%);
-    top: 25%;
-    width: 300px;
-    height: 500px;
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    background-color: white;
-    
-}
-
-.login{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 400px;
-    margin: 5% 25% 0 0;
-    background-color: white;
-    padding: 25px;
-    width: 250px;
-    border-radius: 5px;
-
-    form{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-}
-
-main{
-    display: flex;
-    flex-direction: row-reverse;
-    background-color: #f0f2f5;
-    height: 642px;
 }

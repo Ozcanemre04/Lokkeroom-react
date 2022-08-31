@@ -1,0 +1,62 @@
+@import './variables.scss';
+
+.login-main{
+    @include display(flex,row-reverse,space-between,flex-start);
+    background-color:$light;
+    height: 642px;
+    width: 100%;
+}
+.login{
+    @include display(flex,column,center,center);
+    height: 640px;
+    background-color:$light;
+    padding: 25px;
+    width: 50%;
+    border-radius: 5px;
+    button{
+        margin: 10px 0 10px 0;
+        width: 50%;
+        border-radius:10px;
+        background-color: $dark;
+        border: none;
+        padding: 10px;
+        color: #ced3d9;
+    }
+    
+    form{
+
+        background-color:$dark;
+        height: 620px;
+        width: 50%;
+        border-radius:20px;
+        @include display(flex,column,center,center);
+        h2{
+            color: $lighter;
+        }
+        p{
+            color: white;
+            text-decoration: underline;
+        }
+        input{
+            margin:10px 0 10px 0;
+            color: $dark;
+        }
+        button{
+            background-color: white;
+            color: $dark;
+            padding: 5px;
+        
+        }
+    }
+}
+.loccker-img{
+    @include display(flex,row,center,center);
+    width: 50%;
+    height: 640px;
+    
+    img{
+        width: 80%;
+        height: 640px;
+        border-radius: 50%;
+    }
+}
