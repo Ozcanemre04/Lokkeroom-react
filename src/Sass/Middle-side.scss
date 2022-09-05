@@ -1,0 +1,41 @@
+@import './variables.scss';
+.middle-side{
+    width: 60%;
+    background-color: $dark;
+    height: 721px;
+    .title{
+        background-color: $light;
+        color: $lighter;
+        text-align: center;
+        height: 10%;
+        border-bottom: 1px solid black;
+    }
+    .all-messages{
+        @include display(flex,column,center,flex-start);
+        overflow-y: scroll;
+        height: 580px;
+    
+       
+        .message{
+            width: 50%;
+            height: 100px;
+            background-color: $light;
+            margin: 10px 0 10px 0;
+            color: $lighter;
+            padding: 5px;
+            border-radius: 5px;
+            
+        }
+        .own-message{
+            @extend .message;
+            align-self: flex-end;
+            background-color: purple;
+        }
+    }
+
+    .text{
+        background-color: $light;
+        height: 10%;
+    }
+
+}

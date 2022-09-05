@@ -1,7 +1,47 @@
 @import './variables.scss';
 
 .right-side{
-    width: 80%;
-    height: 644px;
-    background-image: url('../assets/back.webp');
+    width: 20%;
+    height: 721px;
+    background-color: $light;
+    border-left: 1px solid black;
+    .right-side-title{
+        border-bottom: 1px solid black;
+        padding: 10px;
+        color: $lighter;
+        text-align: center;
+
+    }
+
+    .all-user{
+        display: flex;
+        flex-direction: column;
+        .each-user{
+            @include display(flex,row,space-between,center);
+            background-color: $dark;
+            padding: 5px;
+            height: 50px;
+            margin: 10px 0 10px 0;
+            color: $lighter;
+           
+        }
+        .erreur2{
+            border-bottom: 1px solid black;
+            @include display(flex,column,center,center);
+            height: 623px;
+            font-size: 50px;
+            text-align: center;
+
+        }
+    }
+    .erreur1{
+        @include display(flex,column,center,center);
+        text-align: center;
+        height: 50px;
+        border-bottom: 1px solid black;
+
+        
+        
+    }
+
 }

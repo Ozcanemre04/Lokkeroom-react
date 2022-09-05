@@ -4,6 +4,7 @@ import  Modal from 'react-modal';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import message from '../assets/message.jpg';
+import Navbar from '../components/Navbar/Navbar';
 interface Props {
     setLogged:React.Dispatch<React.SetStateAction<boolean>>
     logged:boolean
@@ -40,13 +41,15 @@ export const Login:React.FC<Props>= ({setLogged,logged}) => {
         }
 
   return (
+  <>
+  <Navbar />
     <main className='login-main'>  
     <section className='login'>
         <form action="" onSubmit={handleSubmit}>
             <h2>Login Form</h2>
             <input type="text" name='email' placeholder='write you email' value={input.email} onChange={handleChange} />
             <input type="password" name='password' placeholder='write your password' value={input.password} onChange={handleChange} />
-            <button type='submit'>Login</button>
+            <button type='submit' className='submit'>Login</button>
             {logged&& <Link to={"/lokkeroom"}><p>go to main page</p></Link>}
         </form>
         <button onClick={handleClick}>Register</button>
@@ -62,5 +65,6 @@ export const Login:React.FC<Props>= ({setLogged,logged}) => {
     </Modal>
             
     </main>
+    </>
   )
 }

@@ -9,10 +9,9 @@
 }
 
 .left-side{
-    
     width: 20%;
     border-right: 1px solid black;
-    height: 644px;
+    height: 721px;
     background-color: $light;
     .left-header{
         @include display(flex,row,space-between,center);
@@ -27,5 +26,41 @@
             border: none;
             border-radius: 5px;
         }
+    }
+    
+    .all-lobby{
+        @include display(flex,column,center,center)
+    }
+    .lobby{
+        width: 80%;
+        height: 50px;
+        background-color: $dark;
+        margin: 10px 0 10px 0;
+        padding: 10px;
+        text-align: center;
+        color: white;
+        border-radius: 5px;
+        &:hover{
+            cursor: pointer;
+        }
+        
+    }
+    .admin-lobby{
+        @extend .lobby;
+        .hide{
+            display: none;
+        }
+        &:hover{
+            cursor: pointer;
+           .hide{
+            display: inline;
+            
+           }
+        } 
+        
+    }
+    .active{
+        @extend .lobby;
+        background-color: purple;
     }
 }

@@ -1,26 +1,38 @@
 @import './variables.scss';
+@import './Login.scss';
 
 .register { 
     width: 100%;
+    height: 100%;
     
     .close{
         width: 100%;
         outline: none;
         border: none;
         text-align: end;
-        background-color: white;
+        background-color: $light;
         padding: 5px;
         margin-right: 3px;
         font-size: large;
+        
+    }
+    h2{
+        text-align: center;
+        color: $light;
     }
     form{
         @include display(flex,column,center,center);
-        height: 500px;
+        height: 300px;
         input{
             margin: 10px 0 10px 0;
             padding: 5px;
-            width: 150px;
+            width: 80%;
         }
+        button{
+            margin-top: 20px;
+            width: 80%;
+        }
+       
         
     }
 }
@@ -32,9 +44,10 @@
     transform: translateX(45%);
     top: 25%;
     width: 300px;
-    height: 500px;
+    height: 400px;
     border: 1px solid black;
-    background-color: white;
-    @include display(flex,row,center,flex-start)
+    background-color:$dark;
+    @include display(flex,row,center,flex-start);
+    border-radius:5px;
     
 }

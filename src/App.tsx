@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Navbar from './components/Navbar/Navbar';
 import { Login } from './pages/Login';
 import Main from './pages/Main';
 import './Sass/App.scss'
@@ -20,7 +19,7 @@ function App() {
   return (
     <>
     
-    <Navbar />
+    
     <BrowserRouter>
     <Routes>
       <Route path='/' element={<Login setLogged={setLogged} logged={logged}/>}/>  

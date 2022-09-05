@@ -6,7 +6,7 @@ interface Props {
     setLogged:React.Dispatch<React.SetStateAction<boolean>>
 }
 const Userinfo:React.FC<Props> = ({setLogged,display}) => {
-    function handleRemove(){
+    function handleLogout(){
         window.localStorage.clear()
         setLogged(false)
       }
@@ -15,7 +15,7 @@ const Userinfo:React.FC<Props> = ({setLogged,display}) => {
       <h1>{display?.name}</h1>
       <p>your id:{display?.id}</p>
       <Link to={'/'}>
-      <button onClick={handleRemove}>logout</button>
+      <button onClick={handleLogout}>logout</button>
       </Link>
       </div>
   )

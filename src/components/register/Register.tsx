@@ -30,11 +30,12 @@ export const Register:React.FC<Props> = ({setIsShown}) => {
   return (
     <>
     <button onClick={()=>setIsShown(false)} className='close'>x</button>
+    <h2>Register</h2>
         <form action="" onSubmit={handleSubmit}>
             <input type="text" placeholder='name' name='name' value={formValue.name} onChange={handleChange}/>
             <input type="text" placeholder='email' name='email' value={formValue.email} onChange={handleChange}/>
             <input type="password" placeholder='password' name='password' value={formValue.password} onChange={handleChange} />
-            <button type='submit'>register</button>
+            <button type='submit' className='submit'>register</button>
         </form>
         
     </>
