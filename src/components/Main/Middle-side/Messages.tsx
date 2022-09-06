@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-export interface Props{
+
+import EachMessage from './EachMessage';
+
+export interface Mes{
     messages: [{
         message: string;
         name: string;
@@ -11,20 +14,27 @@ export interface Props{
         name: string;
         id: string;
     }
+    config: {
+      headers: {
+          Authorization: string;
+      };
+  }
+
+  messageCount: number
+  setMessageCount: React.Dispatch<React.SetStateAction<number>>
 }
 
-const Messages:React.FC<Props> = ({messages,display}) => {
-   
-    
+const Messages:React.FC<Mes> = ({messages,display,config,messageCount,setMessageCount}) => {
+  
 
 
-    
+
   return (
     <section className='all-messages'>
-      {messages?.map(message=>(
-        <div className={ display.id===message.author_id?'own-message':'message'} key={message.id} >
-            <p>{message?.message}</p>
-            </div>
+      {messages?.map((message)=>(
+      <EachMessage key={message?.id} message={message} display={display} config={config} messageCount={messageCount} setMessageCount={setMessageCount} />
+
+        
             
       ))}
       

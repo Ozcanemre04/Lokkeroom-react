@@ -24,18 +24,53 @@
             color: $lighter;
             padding: 5px;
             border-radius: 5px;
+            .display{
+                display: inline;
+            }
+            .hide{display: none;}
             
         }
         .own-message{
             @extend .message;
+            @include display(flex,row,space-between,center);
             align-self: flex-end;
             background-color: purple;
+            .dot{
+                button{
+                    background-color: purple;
+                    border: none;
+
+                }
+                .buttons{
+                    display:none;
+                }
+                
+
+            }
         }
     }
 
     .text{
         background-color: $light;
         height: 10%;
+        @include display(flex,row,center,center);
+        input{
+            width:500px;
+            padding: 5px;
+            outline: none;
+            border: none;
+            border-radius: 5px;
+        }
+        button{
+            padding: 5px;
+            margin-left: 5px;
+            outline: none;
+            border-radius: 5px;
+            border: none;
+            &:hover{
+                cursor: pointer;
+            }
+        }
     }
 
 }

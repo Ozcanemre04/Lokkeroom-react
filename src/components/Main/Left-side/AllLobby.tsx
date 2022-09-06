@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 interface lobby{
    alllobby: [{
@@ -30,13 +30,13 @@ const AllLobby:React.FC<lobby> = ({alllobby,setTitle,adminLobby,title,setLobbyId
 
 
 
-const clickhandle=(e: React.MouseEvent<HTMLDivElement, MouseEvent>)=>{
+const clickhandle=useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>)=>{
 setTitle(e.currentTarget.firstChild?.textContent)
 setLobbyId(e.currentTarget.id)
 setAdminId(e.currentTarget.children[1].id);
 
 
-}
+},[])
 const clickhandle2=(e: React.MouseEvent<HTMLDivElement, MouseEvent>)=>{
   setTitle(e.currentTarget.firstChild?.textContent)
   setLobbyId(e.currentTarget.id)

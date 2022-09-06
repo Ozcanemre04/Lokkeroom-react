@@ -27,29 +27,42 @@ const Main:React.FC<Props> = ({display,setDisplay,token,setLogged}) => {
   const[messages,setMessages] =useState<[{message:string,name:string,id:string,author_id:string}]>()
   const[title,setTitle] = useState<string|undefined|null>('')
   const[adminLobby,setAdminLobby] = useState<[{id:string,name:string,admin_id:string}]>()
-  const [allUser,setAllUser] =useState<[{id:string,name:string,lobby_id:string}]>()
-  const [LobbyId,setLobbyId] =useState('')
+  const[allUser,setAllUser] =useState<[{id:string,name:string,lobby_id:string}]>()
+  const[LobbyId,setLobbyId] =useState('')
   const[adminId,setAdminId] = useState('')
   const[count,setCount] = useState(0)
+  const[messageCount,setMessageCount] = useState(0)
+  const [lobbyCount,setLobbyCount] = useState(0)
   
+ 
  
 //useEffect
 useEffect(()=>{
   axios.get('https://lokkeroom.herokuapp.com/api/user',config)
   .then(res=>setDisplay(res.data));
-
+  
   axios.get('https://lokkeroom.herokuapp.com/api/lobby',config)
   .then(res=>setAlllobby(res.data));
-  axios.get('https://lokkeroom.herokuapp.com/api/admin',config)
-  .then(res=>setAdminLobby(res.data));
-
+  
+  
 },[token]);
-console.log(messages);
+
+
 
 useEffect(()=>{
+  axios.get('https://lokkeroom.herokuapp.com/api/admin',config)
+  .then(res=>setAdminLobby(res.data));
+     
+},[token,lobbyCount])
+
+ 
+
+
+useEffect(()=>{
+  
   axios.get('https://lokkeroom.herokuapp.com/api/lobby/'+ LobbyId +'?page=1&limit=100000',config)
     .then(res=>setMessages(res.data.result))
-},[title])
+},[title,messageCount])
 
 useEffect(()=>{
   axios.get('https://lokkeroom.herokuapp.com/api/admin/users/'+LobbyId ,config)
@@ -70,15 +83,15 @@ useEffect(()=>{
    
     <section className='left-side'>
       < Userinfo display={display} setLogged={setLogged} />
-      <CreateLobby config={config} adminLobby={adminLobby} setAdminLobby={setAdminLobby} />
+      <CreateLobby config={config} adminLobby={adminLobby} setAdminLobby={setAdminLobby} lobbyCount={lobbyCount} setLobbyCount ={setLobbyCount} />
       <AllLobby alllobby={alllobby}  setTitle={setTitle} adminLobby={adminLobby} title={title}  setLobbyId={setLobbyId} setAdminId={setAdminId}   />
       
     </section>
     <section className='middle-side'>
       
       <MiddleTitle title={title} />
-     < Messages messages={messages} display={display} />
-     <Sendmessage config={config} LobbyId={LobbyId} setMessages={setMessages} messages={messages} />
+     < Messages messages={messages} display={display} config={config} messageCount={messageCount} setMessageCount={setMessageCount} />
+     <Sendmessage config={config} LobbyId={LobbyId} setMessages={setMessages} messages={messages} messageCount={messageCount} setMessageCount={setMessageCount} />
 
     </section>
      <section className='right-side'>

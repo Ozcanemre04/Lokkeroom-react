@@ -17,10 +17,13 @@ setAdminLobby: React.Dispatch<React.SetStateAction<[{
   id: string;
   name: string;
   admin_id: string;
-}] | undefined>>
+}] | undefined>>;
+
+lobbyCount:number;
+setLobbyCount: React.Dispatch<React.SetStateAction<number>>
 }
 
-const CreateLobby:React.FC<Props> = ({config,setAdminLobby,adminLobby}) => {
+const CreateLobby:React.FC<Props> = ({config,setAdminLobby,adminLobby,lobbyCount,setLobbyCount}) => {
 const[input,setInput] = useState('')
   function handleChange(e:React.ChangeEvent<HTMLInputElement>){
      setInput(e.target.value);
@@ -40,6 +43,7 @@ const[input,setInput] = useState('')
     
     .then(res=>copy.push(res.data));
     setAdminLobby(copy)
+    setLobbyCount(lobbyCount + 1)
   }
   
   

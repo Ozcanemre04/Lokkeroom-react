@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay } from '@fortawesome/free-solid-svg-icons'
 
 interface Props{
   config: {
@@ -19,9 +21,12 @@ interface Props{
     name: string;
     id: string;
     author_id: string;
-}] | undefined>>  
+}] | undefined>> ;
+
+messageCount: number
+setMessageCount: React.Dispatch<React.SetStateAction<number>>
 }
-const Sendmessage:React.FC<Props> = ({config,LobbyId,setMessages,messages}) => {
+const Sendmessage:React.FC<Props> = ({config,LobbyId,setMessages,messages,messageCount,setMessageCount}) => {
 const [input,setInput] =useState('')
  function handleChange(e:React.ChangeEvent<HTMLInputElement>){
     setInput(e.target.value)
@@ -36,13 +41,14 @@ const copyMessage= Object.assign([],messages)
    },config)
    .then(res=>copyMessage.push(res.data))
    setMessages(copyMessage)
+   setMessageCount(messageCount + 1)
  }
 
   return (
     <section className='text'>
       <form action="">
          <input type="text" onChange={handleChange} />
-      <button onClick={handleClick}>+</button>
+      <button onClick={handleClick}><FontAwesomeIcon icon={faPlay} /></button>
       </form>
       
     </section>
