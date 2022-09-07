@@ -24,6 +24,7 @@
             color: $lighter;
             padding: 5px;
             border-radius: 5px;
+            @include display(flex,row,space-between,center);
             .display{
                 display: inline;
             }
@@ -32,7 +33,6 @@
         }
         .own-message{
             @extend .message;
-            @include display(flex,row,space-between,center);
             align-self: flex-end;
             background-color: purple;
             .dot{

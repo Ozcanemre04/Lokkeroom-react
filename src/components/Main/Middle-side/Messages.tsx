@@ -19,12 +19,14 @@ export interface Mes{
           Authorization: string;
       };
   }
-
+  LobbyId:string;
+  adminId:string;
+  
   messageCount: number
   setMessageCount: React.Dispatch<React.SetStateAction<number>>
 }
 
-const Messages:React.FC<Mes> = ({messages,display,config,messageCount,setMessageCount}) => {
+const Messages:React.FC<Mes> = ({messages,display,config,messageCount,setMessageCount,LobbyId,adminId}) => {
   
 
 
@@ -32,7 +34,7 @@ const Messages:React.FC<Mes> = ({messages,display,config,messageCount,setMessage
   return (
     <section className='all-messages'>
       {messages?.map((message)=>(
-      <EachMessage key={message?.id} message={message} display={display} config={config} messageCount={messageCount} setMessageCount={setMessageCount} />
+      <EachMessage key={message?.id} message={message} display={display} config={config} messageCount={messageCount} setMessageCount={setMessageCount} LobbyId={LobbyId} adminId={adminId} />
 
         
             

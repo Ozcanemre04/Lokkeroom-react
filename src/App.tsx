@@ -8,10 +8,12 @@ function App() {
   const [logged,setLogged] =useState(false)
   const [display,setDisplay] =useState({'name':'','id':''})
   const [token,setToken] = useState('')
+  const givetoken=()=>{
+    const tokken = JSON.parse(localStorage.getItem('token')|| '{}')
+     setToken(tokken)
+}
    useEffect(()=>{
-      const tokken = JSON.parse(localStorage.getItem('token')|| '{}')
-       setToken(tokken)
-       
+       givetoken()
    },[logged,display])
   
   

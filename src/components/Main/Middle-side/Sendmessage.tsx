@@ -36,12 +36,12 @@ const copyMessage= Object.assign([],messages)
 
  function handleClick(e:React.MouseEvent<HTMLButtonElement, MouseEvent>){
   e.preventDefault()
-   axios.post('https://lokkeroom.herokuapp.com/api/lobby/'+LobbyId,{
+  axios.post('https://lokkeroom.herokuapp.com/api/lobby/'+LobbyId,{
     message:input
-   },config)
-   .then(res=>copyMessage.push(res.data))
-   setMessages(copyMessage)
-   setMessageCount(messageCount + 1)
+  },config)
+  .then(res=>copyMessage.push(res.data))
+  setMessages(copyMessage)
+  setMessageCount(messageCount + 1)
  }
 
   return (

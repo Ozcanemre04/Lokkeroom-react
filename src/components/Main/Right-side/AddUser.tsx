@@ -47,7 +47,7 @@ const int = parseInt(LobbyId)
    .then(res=>console.log(res.data))
     setCount(count +1)
   }
-  console.log(count);
+  
   
 
 
