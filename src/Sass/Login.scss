@@ -3,7 +3,7 @@
 .login-main{
     @include display(flex,row-reverse,space-between,flex-start);
     background-color:$light;
-    height: 642px;
+    height: 644px;
     width: 100%;
 }
 .login{
