@@ -1,8 +1,13 @@
 @import './variables.scss';
+
 .middle-side{
+    @include scrollbars(5px,$light);
     width: 60%;
     background-color: $dark;
     height: 721px;
+    
+    
+    
     .title{
         background-color: $light;
         color: $lighter;
@@ -11,20 +16,28 @@
         border-bottom: 1px solid black;
     }
     .all-messages{
-        @include display(flex,column,center,flex-start);
-        overflow-y: scroll;
+        @include display(flex,column,flex-start,flex-start);
+        overflow-y: auto;
         height: 580px;
-    
-       
+        
+        
         .message{
             width: 50%;
             height: 100px;
             background-color: $light;
-            margin: 10px 0 10px 0;
+            margin: 10px;
             color: $lighter;
             padding: 5px;
             border-radius: 5px;
             @include display(flex,row,space-between,center);
+            .right{
+              button{
+                    border: none;
+                    background-color: $light;
+                    color: white;
+                    margin-right: 10px;
+              }
+            }
             .display{
                 display: inline;
             }
@@ -35,12 +48,10 @@
             @extend .message;
             align-self: flex-end;
             background-color: purple;
-            .dot{
+            .right{
                 button{
                     background-color: purple;
-                    border: none;
-
-                }
+                } 
                 .buttons{
                     display:none;
                 }

@@ -8,3 +8,23 @@ $lighter:#ced3d9;
     justify-content: $justify-content;
     align-items: $align-item;
 }
+
+@mixin  scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
+    ::-webkit-scrollbar {
+        width:  $size;
+        height: $size;
+    }
+  
+    ::-webkit-scrollbar-thumb {
+        background: $foreground-color;
+        border-radius: 10px;
+        
+    }
+  
+    ::-webkit-scrollbar-track {
+        background: $background-color;
+        border-radius: 10px;
+        
+       
+    }
+}

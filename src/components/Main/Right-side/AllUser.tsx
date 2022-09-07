@@ -1,5 +1,7 @@
 import React from 'react'
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 interface Props{
     allUser: [{
@@ -48,7 +50,7 @@ const AllUser:React.FC<Props> = ({allUser,setAllUser,config,LobbyId,adminId,disp
        allUser?.map(user=>(
         <div className='each-user' key={user?.id} id={user?.id}>
             <p>{ user?.name }</p>
-            <button onClick={handleClick} id={user?.id}>delete</button>
+            <button onClick={handleClick} id={user?.id}>< FontAwesomeIcon icon={faTrash}/></button>
         </div>
        ))
        

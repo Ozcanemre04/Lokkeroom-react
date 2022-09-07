@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
+
 
 
 interface Props{
@@ -45,10 +48,13 @@ function handleClick(){
 }
 
 function handleDelete( e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
-    const id = e.currentTarget.id
-    axios.delete('https://lokkeroom.herokuapp.com/api/lobby/message/'+id,config)
-    .then(res=>console.log(res.data))
-    setMessageCount(messageCount + 1)
+  const id = e.currentTarget.id
+  setMessageCount(messageCount + 1)
+    if(adminId!==display.id){
+      axios.delete('https://lokkeroom.herokuapp.com/api/lobby/message/'+id,config)
+      .then(res=>console.log(res.data))
+
+    }
 
     if(adminId===display.id){
       axios.delete('https://lokkeroom.herokuapp.com/api/admin/message/'+id+'/'+LobbyId,config)
@@ -84,9 +90,9 @@ function handleDelete( e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
             <input type="text"   className={active===true?'display':'hide'} onChange={handleChange} />
           </div>
             <div className='right' id={message?.id}>
-              <button  className={active===true?'hide':'display'} onClick={handleClick}>patch</button>
-              <button className={active===true?'display':'hide'} onClick={handleUpdate}>+</button>
-              <button onClick={handleDelete} id={message?.id}><FontAwesomeIcon icon={ faTrash} /></button>
+              <button  className={active===true?'hide':'display'} onClick={handleClick}><FontAwesomeIcon icon={faPencil}/></button>
+              <button className={active===true?'display':'hide'} onClick={handleUpdate}><FontAwesomeIcon icon={faPlay}/></button>
+              <button onClick={handleDelete} id={message?.id} className='delete'><FontAwesomeIcon icon={ faTrash} /></button>
             </div>
             
             </div>

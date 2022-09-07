@@ -40,8 +40,8 @@ const copyMessage= Object.assign([],messages)
     message:input
   },config)
   .then(res=>copyMessage.push(res.data))
-  setMessages(copyMessage)
   setMessageCount(messageCount + 1)
+  setMessages(copyMessage)
  }
 
   return (
