@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 
 
 import EachMessage from './EachMessage';
+import { Socket } from 'socket.io-client';
 
 export interface Mes{
-    messages: [{
+    messages: {
         message: string;
-        name: string;
+        lobby_id: string;
         id: string;
         author_id: string;
-    }] | undefined;
+        name:string
+    }[];
     display: {
         name: string;
         id: string;
@@ -21,12 +23,18 @@ export interface Mes{
   }
   LobbyId:string;
   adminId:string;
-  
-  messageCount: number
-  setMessageCount: React.Dispatch<React.SetStateAction<number>>
+  socket: Socket;
+  setMessages: React.Dispatch<React.SetStateAction<{
+    message: string;
+    lobby_id: string;
+    id: string;
+    author_id: string;
+    name:string
+}[] >> ;
+
 }
 
-const Messages:React.FC<Mes> = ({messages,display,config,messageCount,setMessageCount,LobbyId,adminId}) => {
+const Messages:React.FC<Mes> =({messages,setMessages,display,config,LobbyId,adminId,socket}) => {
   
 
 
@@ -34,14 +42,12 @@ const Messages:React.FC<Mes> = ({messages,display,config,messageCount,setMessage
   return (
     <section className='all-messages'>
       {messages?.map((message)=>(
-      <EachMessage key={message?.id} message={message} display={display} config={config} messageCount={messageCount} setMessageCount={setMessageCount} LobbyId={LobbyId} adminId={adminId} />
-
-        
-            
+      <EachMessage key={messages.indexOf(message)} message={message} display={display} config={config} LobbyId={LobbyId} adminId={adminId} socket={socket} messages={messages} setMessages={setMessages} />
+    
       ))}
       
     </section>
   )
 }
 
-export default Messages
+export default memo(Messages)

@@ -1,47 +1,55 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
+import { Socket } from 'socket.io-client';
+import { log } from 'console';
+import { randomInt } from 'crypto';
 
 interface Props{
   config: {
     headers: {
         Authorization: string;
     };};
+    socket: Socket
     LobbyId:string;
-
-    messages: [{
-      message: string;
+    display: {
       name: string;
       id: string;
+  }
+    messages: {
+      message: string;
+      lobby_id: string;
+      id: string;
       author_id: string;
-  }] | undefined
-  setMessages: React.Dispatch<React.SetStateAction<[{
+      name:string
+  }[]
+  setMessages: React.Dispatch<React.SetStateAction<{
     message: string;
-    name: string;
+    lobby_id: string;
     id: string;
     author_id: string;
-}] | undefined>> ;
-
-messageCount: number
-setMessageCount: React.Dispatch<React.SetStateAction<number>>
+    name:string
+}[] >> ;
 }
-const Sendmessage:React.FC<Props> = ({config,LobbyId,setMessages,messages,messageCount,setMessageCount}) => {
-const [input,setInput] =useState('')
+const Sendmessage:React.FC<Props> = ({config,LobbyId,messages,socket,display}) => {
+const [message,setMessage] =useState('')
  function handleChange(e:React.ChangeEvent<HTMLInputElement>){
-    setInput(e.target.value)
+  setMessage(e.target.value)
  }
 
-const copyMessage= Object.assign([],messages)
+
 
  function handleClick(e:React.MouseEvent<HTMLButtonElement, MouseEvent>){
-  e.preventDefault()
-  axios.post('https://lokkeroom.herokuapp.com/api/lobby/'+LobbyId,{
-    message:input
+  e.preventDefault() 
+  axios.post('http://localhost:5000/api/lobby/'+LobbyId,{
+    message:message
   },config)
-  .then(res=>copyMessage.push(res.data))
-  setMessageCount(messageCount + 1)
-  setMessages(copyMessage)
+  .then(res=>{
+    if(res.data.lobby_id===LobbyId){
+      socket.emit("send-message",{message:res.data.message,lobby_id:res.data.lobby_id,author_id:res.data.author_id,id:res.data.id})
+    }
+  })
  }
 
   return (
@@ -55,4 +63,4 @@ const copyMessage= Object.assign([],messages)
   )
 }
 
-export default Sendmessage
+export default memo(Sendmessage)

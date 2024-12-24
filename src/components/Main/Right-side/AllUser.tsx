@@ -29,17 +29,14 @@ interface Props{
       name: string;
       id: string;
   }
-  setCount: React.Dispatch<React.SetStateAction<number>>
-  count:number
+
 }
 
-const AllUser:React.FC<Props> = ({allUser,setAllUser,config,LobbyId,adminId,display,setCount,count}) => {
+const AllUser:React.FC<Props> = ({allUser,setAllUser,config,LobbyId,adminId,display}) => {
 
     function handleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
-       axios.delete('https://lokkeroom.herokuapp.com/api/admin/lobby/'+LobbyId+'/remove_user/'+e.currentTarget.id,config)
+       axios.delete('http://localhost:5000/api/admin/lobby/'+LobbyId+'/remove_user/'+e.currentTarget.id,config)
        .then(res=>console.log(res.data))
-       setCount(count + 1)
-  
     }
     
   return (
@@ -52,16 +49,7 @@ const AllUser:React.FC<Props> = ({allUser,setAllUser,config,LobbyId,adminId,disp
             <p>{ user?.name }</p>
             <button onClick={handleClick} id={user?.id}>< FontAwesomeIcon icon={faTrash}/></button>
         </div>
-       ))
-       
-      }
-      {adminId ==="0"&&
-      <div className='erreur2'>
-        <h4>
-        you are not admin
-
-        </h4>
-        </div>
+       ))  
       }
        </section>
        </>

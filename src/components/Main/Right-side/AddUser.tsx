@@ -26,12 +26,8 @@ display: {
   name: string;
   id: string;
 }
-
-setCount: React.Dispatch<React.SetStateAction<number>>
-count:number
-
 }
-const AddUser:React.FC<Props> = ({LobbyId,config,allUser,setAllUser,adminId,display,setCount,count}) => {
+const AddUser:React.FC<Props> = ({LobbyId,config,allUser,setAllUser,adminId,display}) => {
   const[input,setInput] =useState('')
 
   function handleChange(e:React.ChangeEvent<HTMLInputElement>){
@@ -41,11 +37,13 @@ const AddUser:React.FC<Props> = ({LobbyId,config,allUser,setAllUser,adminId,disp
 const int = parseInt(LobbyId)
   function onSubmit(){
     
-   axios.post('https://lokkeroom.herokuapp.com/api/admin/lobby/'+int+'/add_user',{
-    user_id:input
+   axios.post('http://localhost:5000/api/admin/lobby/'+ LobbyId +'/add_user',{
+    user_name:input
    },config)
-   .then(res=>console.log(res.data))
-    setCount(count +1)
+   .then(res=>{
+    console.log(LobbyId);  
+    })
+    
   }
   
   
@@ -55,18 +53,10 @@ const int = parseInt(LobbyId)
     <>
       {adminId!=='0'&& 
         <div className='form'>
-        <input type="number" name="" id="" placeholder='write user id' onChange={handleChange} />
-        <button onClick={onSubmit} >create</button>
+        <input type="text" name="" id="" placeholder='write name of user' onChange={handleChange} />
+        <button onClick={onSubmit} >+</button>
         </div>
       }
-      {adminId==='0'&&
-        <div className='erreur1'>
-          <h3>
-           see all user only for admin
-
-          </h3>
-        </div>
-}
       </>
   )
 }

@@ -18,12 +18,9 @@ setAdminLobby: React.Dispatch<React.SetStateAction<[{
   name: string;
   admin_id: string;
 }] | undefined>>;
-
-lobbyCount:number;
-setLobbyCount: React.Dispatch<React.SetStateAction<number>>
 }
 
-const CreateLobby:React.FC<Props> = ({config,setAdminLobby,adminLobby,lobbyCount,setLobbyCount}) => {
+const CreateLobby:React.FC<Props> = ({config,setAdminLobby,adminLobby}) => {
 const[input,setInput] = useState('')
   function handleChange(e:React.ChangeEvent<HTMLInputElement>){
      setInput(e.target.value);
@@ -37,13 +34,12 @@ const[input,setInput] = useState('')
   
   function handleSubmit(){
     
-    axios.post('https://lokkeroom.herokuapp.com/api/admin/newadmin/lobby',{
+    axios.post('http://localhost:5000/api/admin/newadmin/lobby',{
       name:input
     },config)
     
     .then(res=>copy.push(res.data));
     setAdminLobby(copy)
-    setLobbyCount(lobbyCount + 1)
   }
   
   
@@ -51,7 +47,7 @@ const[input,setInput] = useState('')
     <div className='form'>
       
         <input type="text" name="" id="" placeholder='write lobby name' onChange={handleChange} />
-        <button onClick={handleSubmit} >create</button>
+        <button onClick={handleSubmit} >+</button>
      
     </div>
   )

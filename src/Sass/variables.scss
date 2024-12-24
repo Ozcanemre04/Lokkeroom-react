@@ -1,11 +1,12 @@
-$dark:#04233c;
-$light:#384559;
-$lighter:#ced3d9;
-
+$dark:#3E5879;
+$light:#3c3d37b0;
+$lighter:#F5EFE7;
+$darker:#213555;
 @mixin display($flex,$flex-direction,$justify-content,$align-item) {
     display: $flex;
     flex-direction: $flex-direction;
     justify-content: $justify-content;
+    
     align-items: $align-item;
 }
 
@@ -24,7 +25,6 @@ $lighter:#ced3d9;
     ::-webkit-scrollbar-track {
         background: $background-color;
         border-radius: 10px;
-        
-       
+ 
     }
 }

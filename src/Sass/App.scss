@@ -5,6 +5,7 @@
 @import './Right-side.scss';
 @import './variables.scss';
 @import './Middle-side.scss';
+@import './Auth.scss';
 
 *{
     margin: 0;
@@ -13,8 +14,12 @@
     
 
 }
+input{
+    outline: none;
+}
 body{
     overflow: hidden;
+    background-color: $lighter;
 }
 
 .submit{
@@ -27,25 +32,62 @@ body{
     padding: 5px;
     width: 50%;
 }
+button{cursor: pointer;}
 
 .form{
-    border-bottom: 1px solid black;
     height: 50px;
-    @include display (flex,row,center,center);
-    
+    @include display (flex,row,space-between,center);
+    padding: 5px;
+    border-radius: 5px;
+    background-color: $lighter;
+    margin: 10px 0 10px 0;
         
         input{
-            padding:5px;
+            background-color: $lighter;
+            padding:8px;
             border-radius: 5px;
+            border: none;
         }
         button{
-            padding: 5px;
-            background-color: white;
-            color: $dark;
+
+            width: 30px;
+            height: 30px;
+            background-color: $lighter;
+            color: $darker;
             border: none;
-            border-radius: 5px;
-            outline: none;
-            margin-left: 20px;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: bold;
         }
     
 }
+
+
+.modal{
+    position: absolute;
+    height: 80%;
+    top: 10%;
+    left: 50%;
+    background-color: $light;
+    padding: 10px;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    button{
+        @include display (flex,row,flex-end,center);
+        width: 100%;
+        background-color: transparent;
+        border: none;
+        .x{
+            color: $darker;
+            font-size: 18px;
+
+        }
+    }
+}
+
+@media screen and (max-width:800px) {
+    .modal{
+        width: 70%;
+        font-size: 20px;
+    }
+  }

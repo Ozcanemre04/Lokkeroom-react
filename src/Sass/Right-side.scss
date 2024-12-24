@@ -1,53 +1,31 @@
 @import './variables.scss';
 .right-side{
     @include scrollbars(5px,$dark);
-    width: 20%;
-    height: 724px;
-    background-color: $light;
-    border-left: 1px solid black;
-    .right-side-title{
-        border-bottom: 1px solid black;
-        padding: 10px;
-        color: $lighter;
-        text-align: center;
-
-    }
-
+    width: 100%;
+    padding: 10px;
+    height: fit-content;
+    
+    
     .all-user{
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
+        @include display(flex,column,flex-start,center);
         overflow-y: auto;
-        height: 580px;
+        height: 300px;
         .each-user{
             @include display(flex,row,space-between,center);
             background-color: $dark;
-            padding: 5px;
+            margin-top: 5px;
+            padding: 8px;
             height: 50px;
-            margin: 10px 0 10px 0;
+            gap: 5px;
             color: $lighter;
-           button{
+            border-radius: 10px;
+            width: 100%;
+        button{
             border: none;
-            color: white;
+            color: $lighter;
             background-color: $dark;
            }
         }
-        .erreur2{
-            border-bottom: 1px solid black;
-            @include display(flex,column,center,center);
-            height: 623px;
-            font-size: 50px;
-            text-align: center;
-
-        }
-    }
-    .erreur1{
-        @include display(flex,column,center,center);
-        text-align: center;
-        height: 50px;
-        border-bottom: 1px solid black;
-
-        
         
     }
 

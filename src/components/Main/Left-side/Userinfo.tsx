@@ -13,7 +13,6 @@ const Userinfo:React.FC<Props> = ({setLogged,display}) => {
   return (
     <div className='left-header'>
       <h1>{display?.name}</h1>
-      <p>your id:{display?.id}</p>
       <Link to={'/'}>
       <button onClick={handleLogout}>logout</button>
       </Link>
