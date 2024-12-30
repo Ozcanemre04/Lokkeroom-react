@@ -6,18 +6,16 @@ import { Link } from 'react-router-dom';
 import message from '../assets/message.jpg';
 import Navbar from '../components/Navbar/Navbar';
 import { Login } from '../components/Auth/Login';
+import { Socket } from 'socket.io-client';
 interface Props {
     setLogged:React.Dispatch<React.SetStateAction<boolean>>
-    logged:boolean
+    logged:boolean;
 }
 
 
 export const Auth:React.FC<Props>= ({setLogged,logged}) => {
     
     const [value,setValue]=useState("login")
- 
-  
-    
 
   return (
   <>

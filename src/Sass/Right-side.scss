@@ -20,6 +20,20 @@
             color: $lighter;
             border-radius: 10px;
             width: 100%;
+        span{
+            .circle{
+                font-size: 10px;
+                color: red;
+            }
+            }
+        .active{
+            @extend span;
+           
+                .circle{
+                    color: green;
+                }
+            
+        }
         button{
             border: none;
             color: $lighter;

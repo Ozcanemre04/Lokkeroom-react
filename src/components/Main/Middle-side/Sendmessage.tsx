@@ -47,7 +47,7 @@ const [message,setMessage] =useState('')
   },config)
   .then(res=>{
     if(res.data.lobby_id===LobbyId){
-      socket.emit("send-message",{message:res.data.message,lobby_id:res.data.lobby_id,author_id:res.data.author_id,id:res.data.id})
+      socket.emit("send-message",res.data)
     }
   })
  }

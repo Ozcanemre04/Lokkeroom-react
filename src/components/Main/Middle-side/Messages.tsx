@@ -42,7 +42,7 @@ const Messages:React.FC<Mes> =({messages,setMessages,display,config,LobbyId,admi
   return (
     <section className='all-messages'>
       {messages?.map((message)=>(
-      <EachMessage key={messages.indexOf(message)} message={message} display={display} config={config} LobbyId={LobbyId} adminId={adminId} socket={socket} messages={messages} setMessages={setMessages} />
+      <EachMessage key={messages.indexOf(message)} message={message} display={display} config={config} LobbyId={LobbyId} adminId={adminId} socket={socket} />
     
       ))}
       

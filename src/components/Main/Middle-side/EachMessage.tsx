@@ -8,14 +8,14 @@ import { Socket } from "socket.io-client";
 
 interface Props {
   message:
-    | {
-        message: string;
-        lobby_id: string;
-        id: string;
-        author_id: string;
-        name: string;
-      }
-    | undefined;
+  | {
+    message: string;
+    lobby_id: string;
+    id: string;
+    author_id: string;
+    name: string;
+  }
+  | undefined;
 
   display: {
     name: string;
@@ -29,24 +29,7 @@ interface Props {
   LobbyId: string;
   adminId: string;
   socket: Socket;
-  setMessages: React.Dispatch<
-    React.SetStateAction<
-      {
-        message: string;
-        lobby_id: string;
-        id: string;
-        author_id: string;
-        name: string;
-      }[]
-    >
-  >;
-  messages: {
-    message: string;
-    lobby_id: string;
-    id: string;
-    author_id: string;
-    name: string;
-  }[];
+
 }
 
 const EachMessage: React.FC<Props> = ({
@@ -56,8 +39,6 @@ const EachMessage: React.FC<Props> = ({
   LobbyId,
   adminId,
   socket,
-  messages,
-  setMessages,
 }) => {
   const [active, setActive] = useState(false);
   const [input, setInput] = useState("");
@@ -149,30 +130,30 @@ const EachMessage: React.FC<Props> = ({
         id={message?.id}
       >
 
-        
-          <div className="left">
-            <p className="username">{message?.name}</p>
-            <p className={active === true ? "hide" : "display"}>
-              {message?.message}
-            </p>
-            <div className="change-message">
-              <input
-                type="text"
-                className={active === true ? "display-input" : "hide"}
-                onChange={handleChange}
-                defaultValue={message?.message}
-                
-              />
-              <button
-                className={active === true ? "display-button" : "hide"}
-                onClick={handleUpdate}
-              >
-                <FontAwesomeIcon icon={faPlay} />
-              </button>
-            </div>
+
+        <div className="left">
+          <p className="username">{message?.name}</p>
+          <p className={active === true ? "hide" : "display"}>
+            {message?.message}
+          </p>
+          <div className="change-message">
+            <input
+              type="text"
+              className={active === true ? "display-input" : "hide"}
+              onChange={handleChange}
+              defaultValue={message?.message}
+
+            />
+            <button
+              className={active === true ? "display-button" : "hide"}
+              onClick={handleUpdate}
+            >
+              <FontAwesomeIcon icon={faPlay} />
+            </button>
           </div>
-          {(display.id===adminId || display.id===message?.author_id)&&
-          
+        </div>
+        {(display.id === adminId || display.id === message?.author_id) &&
+
           <div className="right" id={message?.id}>
             <button className="dots" onClick={() => setClicked(!clicked)}>
               <p>...</p>
@@ -198,8 +179,8 @@ const EachMessage: React.FC<Props> = ({
               </div>
             )}
           </div>
-          } 
-        
+        }
+
       </div>
     </>
   );

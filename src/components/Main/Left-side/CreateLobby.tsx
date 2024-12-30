@@ -1,45 +1,34 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { log } from 'console';
+import { Socket } from 'socket.io-client';
 interface Props{
   config: {
     headers: {
         Authorization: string;
     }
 }
-adminLobby: [{
-  id: string;
-  name: string;
-  admin_id: string;
-}] | undefined
+socket: Socket;
 
-
-setAdminLobby: React.Dispatch<React.SetStateAction<[{
-  id: string;
-  name: string;
-  admin_id: string;
-}] | undefined>>;
 }
 
-const CreateLobby:React.FC<Props> = ({config,setAdminLobby,adminLobby}) => {
+const CreateLobby:React.FC<Props> = ({config,socket}) => {
 const[input,setInput] = useState('')
   function handleChange(e:React.ChangeEvent<HTMLInputElement>){
      setInput(e.target.value);
      
   }
 
-  const copy=Object.assign([],adminLobby)
-  
-  
-  
-  
+
   function handleSubmit(){
     
     axios.post('http://localhost:5000/api/admin/newadmin/lobby',{
       name:input
     },config)
     
-    .then(res=>copy.push(res.data));
-    setAdminLobby(copy)
+    .then(res=>{
+      socket.emit("create-lobby",res.data)
+    });
   }
   
   

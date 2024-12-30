@@ -1,12 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Socket } from 'socket.io-client';
 
 interface Props {
     display: {name: string;id: string}
     setLogged:React.Dispatch<React.SetStateAction<boolean>>
+    socket:Socket
 }
-const Userinfo:React.FC<Props> = ({setLogged,display}) => {
+const Userinfo:React.FC<Props> = ({setLogged,display,socket}) => {
     function handleLogout(){
+      console.log(display);
+      
+        socket.emit("disc",display.id)
         window.localStorage.clear()
         setLogged(false)
       }

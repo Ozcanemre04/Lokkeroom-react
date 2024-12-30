@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { io, Socket } from 'socket.io-client';
 
 interface Props {
     setLogged:React.Dispatch<React.SetStateAction<boolean>>
     logged:boolean
+  
 }
 
 export const Login:React.FC<Props>= ({setLogged,logged}) => {
@@ -56,7 +58,7 @@ export const Login:React.FC<Props>= ({setLogged,logged}) => {
                 }
                 <button type='submit' className='submit'>Login</button>
 
-                {/* {logged&& <Link to={"/lokkeroom"}><p>go to main page</p></Link>} */}
+              
             </form>            
      </div>
         
