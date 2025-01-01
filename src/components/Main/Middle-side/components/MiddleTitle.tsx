@@ -1,6 +1,6 @@
 import { faUser, faUserEdit, faUserMinus, faUserPlus, faUsersBetweenLines } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { memo } from 'react'
 
 interface Title{
     title:string|null|undefined
@@ -28,4 +28,4 @@ const MiddleTitle:React.FC<Title> = ({title,setIsShown,display,adminId}) => {
   )
 }
 
-export default MiddleTitle
+export default memo(MiddleTitle)

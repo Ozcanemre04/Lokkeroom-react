@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import axios from 'axios'
 import { log } from 'console';
 import { Socket } from 'socket.io-client';
@@ -34,12 +34,10 @@ const[input,setInput] = useState('')
   
   return (
     <div className='form'>
-      
         <input type="text" name="" id="" placeholder='write lobby name' onChange={handleChange} />
         <button onClick={handleSubmit} >+</button>
-     
     </div>
   )
 }
 
-export default CreateLobby
+export default memo(CreateLobby)

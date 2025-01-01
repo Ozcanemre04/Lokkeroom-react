@@ -8,27 +8,13 @@ import { io } from 'socket.io-client';
 
 
 function App() {
-  const [logged,setLogged] =useState(false)
-  const [display,setDisplay] =useState({'name':'','id':''})
-  const [token,setToken] = useState('')
-  const givetoken=()=>{
-    const tokken = JSON.parse(localStorage.getItem('token')|| '{}')
-     setToken(tokken)
-}
-   useEffect(()=>{
-       givetoken()
-   },[logged,display])
-  
-  
-  
+  const [logged,setLogged] =useState(false)  
   return (
     <>
-    
-    
     <BrowserRouter>
     <Routes>
       <Route path='/' element={<Auth setLogged={setLogged} logged={logged} />} />  
-      <Route path='/lokkeroom' element={<Main  display={display} setDisplay={setDisplay} setLogged={setLogged} token={token}  />} />
+      <Route path='/lokkeroom' element={<Main setLogged={setLogged}  />} />
     </Routes>
     </BrowserRouter>
     

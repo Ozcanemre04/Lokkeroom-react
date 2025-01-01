@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Socket } from 'socket.io-client';
 
@@ -9,8 +9,6 @@ interface Props {
 }
 const Userinfo:React.FC<Props> = ({setLogged,display,socket}) => {
     function handleLogout(){
-      console.log(display);
-      
         socket.emit("disc",display.id)
         window.localStorage.clear()
         setLogged(false)
@@ -25,4 +23,4 @@ const Userinfo:React.FC<Props> = ({setLogged,display,socket}) => {
   )
 }
 
-export default Userinfo
+export default memo(Userinfo)

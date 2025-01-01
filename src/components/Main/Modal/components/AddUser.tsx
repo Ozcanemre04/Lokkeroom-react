@@ -1,19 +1,14 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import axios from 'axios'
 import { Socket } from 'socket.io-client';
 
 interface Props{
   LobbyId:string;
-
   config: {
     headers: {
         Authorization: string;
     };};
-
-
 adminId:string
-
-
 socket:Socket
 LobbyName:string;
 }
@@ -24,7 +19,7 @@ const AddUser:React.FC<Props> = ({LobbyId,config,adminId,socket,LobbyName}) => {
     setInput(e.target.value)
   }
 
-const int = parseInt(LobbyId)
+
   function onSubmit(){
     
    axios.post('http://localhost:5000/api/admin/lobby/'+ LobbyId +'/add_user',{
@@ -53,4 +48,4 @@ const int = parseInt(LobbyId)
   )
 }
 
-export default AddUser
+export default memo(AddUser)

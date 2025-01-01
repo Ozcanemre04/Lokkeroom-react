@@ -1,8 +1,9 @@
 import React, { memo, useState } from 'react'
 
 
-import EachMessage from './EachMessage';
+
 import { Socket } from 'socket.io-client';
+import EachMessage from './EachMessage';
 
 export interface Mes{
     messages: {
