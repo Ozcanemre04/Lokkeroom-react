@@ -4,23 +4,19 @@ import React, { memo } from 'react'
 import { Socket } from 'socket.io-client';
 import AllUser from './components/AllUser';
 import AddUser from './components/AddUser';
+import { IDisplay } from '../../../Interface/IDisplay';
 
 export interface IModalContainer{
-    display: {
-        name: string;
-        id: string;
-    }|null
-   
+  display: IDisplay|null 
   LobbyId:string;
   adminId:string;
   socket: Socket;
   LobbyName:string;
   setIsShown: React.Dispatch<React.SetStateAction<boolean>>
-  
-onlineUser: {
-  userId: string,
-   socket: string
-}[]
+  onlineUser: {
+    userId: string,
+    socket: string
+  }[]
 }
 
 const ModalContainer:React.FC<IModalContainer> = ({setIsShown,LobbyId,adminId,display,socket,LobbyName,onlineUser}) => {

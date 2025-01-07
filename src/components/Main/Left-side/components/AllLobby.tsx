@@ -1,5 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
-import axios from 'axios'
+import React, { memo} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrown, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Socket } from 'socket.io-client';

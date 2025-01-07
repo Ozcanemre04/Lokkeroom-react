@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import MiddleTitle from './components/MiddleTitle'
 import Messages from './components/Messages'
 import Sendmessage from './components/Sendmessage'
 import { Socket } from 'socket.io-client';
-import axios from 'axios'
-import axiosInstance from '../../../Interceptor/axiosInstance';
 import useFetch from '../../../hooks/useFetch';
-import { log } from 'console';
 import useMessageSocket from '../../../hooks/useMessageSocket';
 import { IMessage } from '../../../Interface/IMessage';
 import { IDisplay } from '../../../Interface/IDisplay';
@@ -36,6 +33,10 @@ const MiddleSide:React.FC<IMiddleSide> = ({title,setIsShown,display,adminId,Lobb
       })
     }, [LobbyId])
     
+    useEffect(()=>{
+        let container = document.getElementById("all-messages")!;
+        container.scrollTop = container.scrollHeight;
+      },[messages])
 
   return (
     <>

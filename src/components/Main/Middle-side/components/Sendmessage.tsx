@@ -1,10 +1,7 @@
 import React, { memo, useState } from 'react'
-import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import { Socket } from 'socket.io-client';
-import { log } from 'console';
-import { randomInt } from 'crypto';
 import axiosInstance from '../../../../Interceptor/axiosInstance';
 import { IMessage } from '../../../../Interface/IMessage';
 
@@ -29,13 +26,14 @@ const [message,setMessage] =useState('')
     if(res.data.lobby_id===LobbyId){
       socket.emit("send-message",res.data)
     }
+    setMessage("")
   })
  }
 
   return (
     <section className='text'>
       <form action="">
-         <input type="text" onChange={handleChange} />
+         <input type="text" onChange={handleChange} value={message} />
       <button onClick={handleClick}><FontAwesomeIcon icon={faPlay} /></button>
       </form>
       

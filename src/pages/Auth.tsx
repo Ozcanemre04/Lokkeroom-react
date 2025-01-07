@@ -13,9 +13,8 @@ interface Props {
 }
 
 
-export const Auth:React.FC<Props>= ({setLogged,logged}) => {
-    
-    const [value,setValue]=useState("login")
+export const Auth:React.FC<Props>= ({setLogged,logged}) => {  
+  const [value,setValue]=useState("login")
 
   return (
   <>

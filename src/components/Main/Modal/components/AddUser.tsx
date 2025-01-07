@@ -1,5 +1,4 @@
 import React, { memo, useState } from 'react'
-import axios from 'axios'
 import { Socket } from 'socket.io-client';
 import axiosInstance from '../../../../Interceptor/axiosInstance';
 
@@ -11,9 +10,11 @@ LobbyName:string;
 }
 const AddUser:React.FC<Props> = ({LobbyId,adminId,socket,LobbyName}) => {
   const[input,setInput] =useState('')
+  const[error,setError] =useState('')
 
   function handleChange(e:React.ChangeEvent<HTMLInputElement>){
     setInput(e.target.value)
+    setError("")
   }
 
 
@@ -22,9 +23,17 @@ const AddUser:React.FC<Props> = ({LobbyId,adminId,socket,LobbyName}) => {
   await axiosInstance.post('api/admin/lobby/'+ LobbyId +'/add_user',{
     user_name:input
    })
-   .then(res=>{    
-    socket.emit("add-user",{id:res.data.id,name:res.data.name,lobby_id:res.data.lobby_id,user_id:res.data.user_id,lobbyName:LobbyName})
+   .then(res=>{
+    if(res.data==='already added'){
+      setError(res.data);
+    }
+    else{
+      socket.emit("add-user",{id:res.data.id,name:res.data.name,lobby_id:res.data.lobby_id,user_id:res.data.user_id,lobbyName:LobbyName})
+    }
+    setInput("")
     })
+  .catch(err=>console.log(err)
+  )
     
   }
   
@@ -32,10 +41,11 @@ const AddUser:React.FC<Props> = ({LobbyId,adminId,socket,LobbyName}) => {
     <>
       {adminId!=='0'&& 
         <div className='form'>
-        <input type="text" name="" id="" placeholder='write name of user' onChange={handleChange} />
+        <input type="text" name="" id="" placeholder='write name of user' onChange={handleChange} value={input} />
         <button onClick={onSubmit} >+</button>
         </div>
       }
+      <p style={{color:"red",paddingLeft:"5px"}}>{error}</p>
       </>
   )
 }

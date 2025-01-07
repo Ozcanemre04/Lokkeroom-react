@@ -1,14 +1,12 @@
-import React, { memo, useEffect, useState } from 'react'
-import axios from 'axios';
+import React, { memo,} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle, faDotCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Socket } from 'socket.io-client';
-import { stringify } from 'querystring';
-import { log } from 'console';
 import axiosInstance from '../../../../Interceptor/axiosInstance';
 import useFetch from '../../../../hooks/useFetch';
 import useUserSocket from '../../../../hooks/useUserSocket';
 import { IUser } from '../../../../Interface/IUser';
+import { IDisplay } from '../../../../Interface/IDisplay';
 
 interface Props {
   onlineUser: {
@@ -17,10 +15,7 @@ interface Props {
   }[]
   LobbyId: string;
   adminId: string
-  display: {
-    name: string;
-    id: string;
-  }|null
+  display: IDisplay|null
   socket: Socket
 
 }

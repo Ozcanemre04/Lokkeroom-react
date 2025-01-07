@@ -1,7 +1,4 @@
-import React, { memo, useState } from 'react'
-
-
-
+import React, { memo } from 'react'
 import { Socket } from 'socket.io-client';
 import EachMessage from './EachMessage';
 import { IMessage } from '../../../../Interface/IMessage';
@@ -16,9 +13,9 @@ export interface Mes{
 }
 
 const Messages:React.FC<Mes> =({messages,display,LobbyId,adminId,socket}) => {
-
+  
   return (
-    <section className='all-messages'>
+    <section className='all-messages' id='all-messages'>
       {messages?.map((message)=>(
       <EachMessage key={messages.indexOf(message)} message={message} display={display} LobbyId={LobbyId} adminId={adminId} socket={socket} />
     
