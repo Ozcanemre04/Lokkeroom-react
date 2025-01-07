@@ -5,46 +5,26 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import { Socket } from 'socket.io-client';
 import { log } from 'console';
 import { randomInt } from 'crypto';
+import axiosInstance from '../../../../Interceptor/axiosInstance';
+import { IMessage } from '../../../../Interface/IMessage';
 
 interface Props{
-  config: {
-    headers: {
-        Authorization: string;
-    };};
-    socket: Socket
-    LobbyId:string;
-    display: {
-      name: string;
-      id: string;
-  }
-    messages: {
-      message: string;
-      lobby_id: string;
-      id: string;
-      author_id: string;
-      name:string
-  }[]
-  setMessages: React.Dispatch<React.SetStateAction<{
-    message: string;
-    lobby_id: string;
-    id: string;
-    author_id: string;
-    name:string
-}[] >> ;
+  socket: Socket
+  LobbyId:string; 
+  setMessages: React.Dispatch<React.SetStateAction<IMessage[]|null >> ;
 }
-const Sendmessage:React.FC<Props> = ({config,LobbyId,messages,socket,display}) => {
+
+const Sendmessage:React.FC<Props> = ({LobbyId,socket}) => {
 const [message,setMessage] =useState('')
  function handleChange(e:React.ChangeEvent<HTMLInputElement>){
   setMessage(e.target.value)
  }
 
-
-
- function handleClick(e:React.MouseEvent<HTMLButtonElement, MouseEvent>){
+ async function handleClick(e:React.MouseEvent<HTMLButtonElement, MouseEvent>){
   e.preventDefault() 
-  axios.post('http://localhost:5000/api/lobby/'+LobbyId,{
+  await axiosInstance.post('api/lobby/'+LobbyId,{
     message:message
-  },config)
+  })
   .then(res=>{
     if(res.data.lobby_id===LobbyId){
       socket.emit("send-message",res.data)

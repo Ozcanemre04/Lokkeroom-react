@@ -3,15 +3,14 @@ import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrown, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Socket } from 'socket.io-client';
-import { log } from 'console';
+import axiosInstance from '../../../../Interceptor/axiosInstance';
+import useFetch from '../../../../hooks/useFetch';
+import { IAdminLobby } from '../../../../Interface/IAdminLobby';
+import { ILobby } from '../../../../Interface/ILobby';
+import useLobbySocket from '../../../../hooks/useLobbySocket';
+
 interface lobby {
   socket: Socket;
-  config: {
-    headers: {
-      Authorization: string;
-    };
-  };
-
   setTitle: React.Dispatch<React.SetStateAction<string | null | undefined>>
   title: string | undefined | null
   setLobbyId: React.Dispatch<React.SetStateAction<string>>
@@ -20,81 +19,31 @@ interface lobby {
 
 }
 
-const AllLobby: React.FC<lobby> = ({setTitle, title, setLobbyId, setAdminId, config, socket, setLobbyName }) => {
-  const [alllobby, setAlllobby] = useState<{ name: string, lobby_id: string, user_id: string }[]>([])
-    const [adminLobby, setAdminLobby] = useState<{ id: string, name: string, admin_id: string }[]>([])
+const AllLobby: React.FC<lobby> = ({setTitle, title, setLobbyId, setAdminId, socket, setLobbyName }) => {
+  const {data:alllobby,setData:setAlllobby} = useFetch<ILobby[]|null>("api/lobby",undefined);
+  const {data:adminLobby,setData:setAdminLobby} = useFetch<IAdminLobby[]|null>("api/admin",undefined);
+  useLobbySocket(socket,setAlllobby,setAdminLobby,setLobbyId)
 
-
-  const clickhandle = (e: React.MouseEvent<HTMLDivElement, MouseEvent>,) => {
-    setTitle(e.currentTarget.firstChild?.textContent)
-    setLobbyId(e.currentTarget.id)
-    setAdminId(e.currentTarget.children[0].children[1].id); 
-    setLobbyName(e.currentTarget.children[0].firstChild!.textContent!)
+  const clickhandle = (title:string,lobbyId:string,adminId:string,lobbyName:string) => { 
+    setTitle(title)
+    setLobbyId(lobbyId)
+    setAdminId(adminId); 
+    setLobbyName(lobbyName)
   }
-  const clickhandle2 = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    setTitle(e.currentTarget.firstChild?.textContent)
-    setLobbyId(e.currentTarget.id)
-    setAdminId('0')
-    setLobbyName("");
-
-  }
-  const displayAllLobby = () => {
-    axios.get('http://localhost:5000/api/lobby', config)
-      .then(res => setAlllobby(res.data));
-
-  }
-  const displayAdminLobby = () => {
-    axios.get('http://localhost:5000/api/admin', config)
-      .then(res => setAdminLobby(res.data));
-  }
-
-  function handleDelete(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  
+ async function handleDelete (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const id = e.currentTarget.id
-    axios.delete('http://localhost:5000/api/admin/removelobby/'+id, config)
+    await axiosInstance.delete('api/admin/removelobby/'+id)
       .then(res => {
-        console.log(res.data);
-        
         socket.emit("delete-lobby", res.data)
       })
       .catch(error=>console.log(error.response.data));
   }
-  useEffect(() => {
-      displayAllLobby()
-      displayAdminLobby()
-  
-    }, []);
-
-  useEffect(() => {
-    socket.on("not-admin-lobby", lobby => {
-      console.log(lobby);
-      setAlllobby((prev) => [...prev, lobby])
-    })
-    socket.on("not-admin-lobby-deleted", lobby => {
-      setAlllobby((prev) => prev.filter(x => x.lobby_id !== lobby))
-      setLobbyId("")
-    })
-      socket.on("receive-lobby", lobby => {
-        setAdminLobby((prev) => [...prev, lobby])
-      })
-      socket.on("lobby-deleted", lobby => {
-        setAdminLobby((prev) => prev.filter(x => x.id !== lobby.id))
-        setAlllobby((prev) => prev.filter(x => x.lobby_id !== lobby.id))
-        setLobbyId("")
-      })
-     
-      return () => {
-        socket.off("receive-lobby");
-        socket.off("not-admin-lobby");
-        socket.off("not-admin-lobby-deleted");
-        socket.off("lobby-deleted");
-      }
-  
-    }, [])
-  
+ 
   return (
     <div className='all-lobby'>
       {adminLobby?.map(lobby => (
-        <div className={title === lobby?.name ? 'active' : 'admin-lobby'} key={lobby?.id} onClick={clickhandle} id={lobby?.id}>
+        <div className={title === lobby?.name ? 'active' : 'admin-lobby'} key={lobby?.id} onClick={()=>clickhandle(lobby.name,lobby.id,lobby.admin_id,lobby.name)} id={lobby?.id}>
           <div>
             <p id={lobby.name}>
               {lobby?.name}
@@ -106,7 +55,7 @@ const AllLobby: React.FC<lobby> = ({setTitle, title, setLobbyId, setAdminId, con
 
       ))}
       {alllobby?.map(lobby => (
-        <div className={title === lobby?.name ? 'active' : 'lobby'} key={lobby?.lobby_id} onClick={clickhandle2} id={lobby?.lobby_id}>
+        <div className={title === lobby?.name ? 'active' : 'lobby'} key={lobby?.lobby_id} onClick={()=>clickhandle(lobby.name,lobby.lobby_id,'0','')} id={lobby?.lobby_id}>
           <div>
           <p>
             {lobby?.name}

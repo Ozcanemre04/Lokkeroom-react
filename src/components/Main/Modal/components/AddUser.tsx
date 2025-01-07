@@ -1,18 +1,15 @@
 import React, { memo, useState } from 'react'
 import axios from 'axios'
 import { Socket } from 'socket.io-client';
+import axiosInstance from '../../../../Interceptor/axiosInstance';
 
 interface Props{
-  LobbyId:string;
-  config: {
-    headers: {
-        Authorization: string;
-    };};
+LobbyId:string;
 adminId:string
 socket:Socket
 LobbyName:string;
 }
-const AddUser:React.FC<Props> = ({LobbyId,config,adminId,socket,LobbyName}) => {
+const AddUser:React.FC<Props> = ({LobbyId,adminId,socket,LobbyName}) => {
   const[input,setInput] =useState('')
 
   function handleChange(e:React.ChangeEvent<HTMLInputElement>){
@@ -20,18 +17,13 @@ const AddUser:React.FC<Props> = ({LobbyId,config,adminId,socket,LobbyName}) => {
   }
 
 
-  function onSubmit(){
+  async function onSubmit(){
     
-   axios.post('http://localhost:5000/api/admin/lobby/'+ LobbyId +'/add_user',{
+  await axiosInstance.post('api/admin/lobby/'+ LobbyId +'/add_user',{
     user_name:input
-   },config)
-   .then(res=>{
-    console.log(LobbyId);
-    
-    console.log(res.data);
-    
+   })
+   .then(res=>{    
     socket.emit("add-user",{id:res.data.id,name:res.data.name,lobby_id:res.data.lobby_id,user_id:res.data.user_id,lobbyName:LobbyName})
-    
     })
     
   }

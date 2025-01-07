@@ -9,38 +9,29 @@ export interface IModalContainer{
     display: {
         name: string;
         id: string;
-    }
-    config: {
-      headers: {
-          Authorization: string;
-      };
-  }
+    }|null
+   
   LobbyId:string;
   adminId:string;
   socket: Socket;
   LobbyName:string;
   setIsShown: React.Dispatch<React.SetStateAction<boolean>>
-
-//   allUser: {
-//     id: string;
-//     name: string;
-//     lobby_id: string;
-// }[]
+  
 onlineUser: {
   userId: string,
    socket: string
 }[]
 }
 
-const ModalContainer:React.FC<IModalContainer> = ({setIsShown,LobbyId,adminId,config,display,socket,LobbyName,onlineUser}) => {
+const ModalContainer:React.FC<IModalContainer> = ({setIsShown,LobbyId,adminId,display,socket,LobbyName,onlineUser}) => {
   return (
     <>
         <button>
           <FontAwesomeIcon className='x' onClick={() => { setIsShown(false) }} icon={faX} />
         </button>
         <section className='right-side'>
-          < AddUser LobbyId={LobbyId} config={config} adminId={adminId} socket={socket} LobbyName={LobbyName} />
-          < AllUser config={config} LobbyId={LobbyId} adminId={adminId} display={display} socket={socket} onlineUser={onlineUser} />
+          < AddUser LobbyId={LobbyId} adminId={adminId} socket={socket} LobbyName={LobbyName} />
+          < AllUser LobbyId={LobbyId} adminId={adminId} display={display} socket={socket} onlineUser={onlineUser} />
         </section>
     </>
   )

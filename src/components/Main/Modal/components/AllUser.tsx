@@ -5,66 +5,38 @@ import { faCircle, faDotCircle, faTrash } from '@fortawesome/free-solid-svg-icon
 import { Socket } from 'socket.io-client';
 import { stringify } from 'querystring';
 import { log } from 'console';
+import axiosInstance from '../../../../Interceptor/axiosInstance';
+import useFetch from '../../../../hooks/useFetch';
+import useUserSocket from '../../../../hooks/useUserSocket';
+import { IUser } from '../../../../Interface/IUser';
 
 interface Props {
   onlineUser: {
     userId: string,
     socket: string
   }[]
-
-  config: {
-    headers: {
-      Authorization: string;
-    };
-  };
   LobbyId: string;
-
   adminId: string
-
   display: {
     name: string;
     id: string;
-  }
+  }|null
   socket: Socket
 
 }
-const AllUser: React.FC<Props> = ({ config, LobbyId, adminId, display, socket, onlineUser }) => {
-  const [allUser, setAllUser] = useState<{ id: string, name: string, lobby_id: string }[]>([])
-  const displayAlluser = () => {
-    axios.get('http://localhost:5000/api/admin/users/' + LobbyId, config)
-      .then(res => setAllUser(res.data))
-
-  }
-  function handleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    axios.delete('http://localhost:5000/api/admin/lobby/' + LobbyId + '/remove_user/' + e.currentTarget.id, config)
+const AllUser: React.FC<Props> = ({LobbyId, adminId, display, socket, onlineUser }) => {
+  const {data:allUser,setData:setAllUser} = useFetch<IUser[]|null>("api/admin/users/"+ LobbyId,undefined);
+  useUserSocket(socket,setAllUser);
+ 
+  async function handleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+   await axiosInstance.delete('api/admin/lobby/' + LobbyId + '/remove_user/' + e.currentTarget.id)
       .then(res => socket.emit("delete-user", res.data))
   }
-
-  useEffect(() => {
-    if (adminId !== '' && LobbyId !== "") {
-      displayAlluser()
-    }
-  }, [LobbyId])
-
-
-  useEffect(() => {
-    socket.on("user-added", user => {
-      setAllUser((prev) => [...prev, user])
-    })
-    socket.on("user-deleted", user => {
-      setAllUser((prev) => prev.filter(x => x.id !== user))
-    })
-
-    return () => {
-      socket.off("user-added");
-      socket.off("user-deleted");
-    }
-  }, [])
 
   return (
     <>
       <section className='all-user'>
-        {adminId === display.id &&
+        {adminId === display?.id &&
 
           allUser?.map(user => (
             <div className='each-user' key={user?.id} id={user?.id}>
