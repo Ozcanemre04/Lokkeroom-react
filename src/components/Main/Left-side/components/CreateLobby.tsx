@@ -1,14 +1,16 @@
-import React, { memo, useState } from 'react'
-import { Socket } from 'socket.io-client';
+import React, { memo, useContext, useState } from 'react'
 import axiosInstance from '../../../../Interceptor/axiosInstance';
-interface Props{
-socket: Socket;
-}
+import { SocketContext } from '../../../../pages/Main';
 
-const CreateLobby:React.FC<Props> = ({socket}) => {
+
+const CreateLobby:React.FC = () => {
 const[input,setInput] = useState('')
+const[error,setError] = useState('')
+const socket = useContext(SocketContext)
+
   function handleChange(e:React.ChangeEvent<HTMLInputElement>){
-     setInput(e.target.value);   
+     setInput(e.target.value);
+     setError("")
   }
 
   async function handleSubmit(){
@@ -16,17 +18,25 @@ const[input,setInput] = useState('')
       name:input
     })
     .then(res=>{
-      socket.emit("create-lobby",res.data)
+      if(res.data !=="group name taken"){
+        socket.emit("create-lobby",res.data)
+      }
+      else{
+        setError(res.data)
+      }
       setInput("")
     });
   }
   
   
   return (
+    <>
     <div className='form'>
         <input type="text" name="" id="" placeholder='write lobby name' onChange={handleChange} value={input} />
-        <button onClick={handleSubmit} >+</button>
+        <button onClick={handleSubmit} disabled={!input} >+</button>
     </div>
+    <p style={{color:"red",paddingLeft:"5px"}}>{error}</p>
+    </>
   )
 }
 

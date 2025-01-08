@@ -1,28 +1,23 @@
 import React, { memo } from 'react'
-import { Socket } from 'socket.io-client';
 import CreateLobby from './components/CreateLobby';
 import Userinfo from './components/Userinfo';
 import AllLobby from './components/AllLobby';
-import { IDisplay } from '../../../Interface/IDisplay';
+
 
 interface leftSide{
-  socket: Socket;
-  setTitle: React.Dispatch<React.SetStateAction<string | null | undefined>>
-  title: string | undefined | null
   setLobbyId: React.Dispatch<React.SetStateAction<string>>
-  setAdminId: React.Dispatch<React.SetStateAction<string>>
-  setLobbyName: React.Dispatch<React.SetStateAction<string>>
-  display: IDisplay|null;
+  title: string | undefined | null
   setLogged:React.Dispatch<React.SetStateAction<boolean>>
- 
+  clickhandle: (title: string, lobbyId: string, adminId: string, lobbyName: string) => void
+
 }
 
-const LeftSide:React.FC<leftSide> = ({display,setLobbyId,setAdminId,setLobbyName,title,socket,setLogged,setTitle}) => {
+const LeftSide:React.FC<leftSide> = ({setLobbyId,title,setLogged,clickhandle}) => {
   return (
     <>
-        <Userinfo display={display} setLogged={setLogged} socket={socket} />
-        <CreateLobby socket={socket} />
-        <AllLobby  setTitle={setTitle}  title={title} setLobbyId={setLobbyId} setAdminId={setAdminId} socket={socket} setLobbyName={setLobbyName} />
+        <Userinfo setLogged={setLogged} />
+        <CreateLobby />
+        <AllLobby title={title} setLobbyId={setLobbyId} clickhandle={clickhandle} />
     </>
   )
 }

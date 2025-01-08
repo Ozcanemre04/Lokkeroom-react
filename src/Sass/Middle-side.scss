@@ -164,6 +164,9 @@
         &:hover {
           cursor: pointer;
         }
+        &:disabled{
+          background-color: grey;
+        }
       }
     }
   }

@@ -1,35 +1,27 @@
-import React, { memo} from 'react';
+import React, { memo, useContext} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrown, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Socket } from 'socket.io-client';
 import axiosInstance from '../../../../Interceptor/axiosInstance';
 import useFetch from '../../../../hooks/useFetch';
 import { IAdminLobby } from '../../../../Interface/IAdminLobby';
 import { ILobby } from '../../../../Interface/ILobby';
 import useLobbySocket from '../../../../hooks/useLobbySocket';
+import { SocketContext } from '../../../../pages/Main';
 
 interface lobby {
-  socket: Socket;
-  setTitle: React.Dispatch<React.SetStateAction<string | null | undefined>>
   title: string | undefined | null
   setLobbyId: React.Dispatch<React.SetStateAction<string>>
-  setAdminId: React.Dispatch<React.SetStateAction<string>>
-  setLobbyName: React.Dispatch<React.SetStateAction<string>>
+  clickhandle:(title: string, lobbyId: string, adminId: string, lobbyName: string) => void
 
 }
 
-const AllLobby: React.FC<lobby> = ({setTitle, title, setLobbyId, setAdminId, socket, setLobbyName }) => {
+const AllLobby: React.FC<lobby> = ({ title, setLobbyId,clickhandle}) => {
   const {data:alllobby,setData:setAlllobby} = useFetch<ILobby[]|null>("api/lobby",undefined);
   const {data:adminLobby,setData:setAdminLobby} = useFetch<IAdminLobby[]|null>("api/admin",undefined);
+  const socket = useContext(SocketContext)
   useLobbySocket(socket,setAlllobby,setAdminLobby,setLobbyId)
-
-  const clickhandle = (title:string,lobbyId:string,adminId:string,lobbyName:string) => { 
-    setTitle(title)
-    setLobbyId(lobbyId)
-    setAdminId(adminId); 
-    setLobbyName(lobbyName)
-  }
   
+   
  async function handleDelete (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const id = e.currentTarget.id
     await axiosInstance.delete('api/admin/removelobby/'+id)

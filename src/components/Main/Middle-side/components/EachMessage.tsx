@@ -1,22 +1,21 @@
-import React, { memo, useState } from "react";
+import React, { memo, useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
-import { Socket } from "socket.io-client";
 import axiosInstance from "../../../../Interceptor/axiosInstance";
 import { IMessage } from "../../../../Interface/IMessage";
-import { IDisplay } from "../../../../Interface/IDisplay";
+import { AdminIdContext, DisplayContext, LobbyIdContext, SocketContext } from "../../../../pages/Main";
 
 interface Props {
   message:IMessage;
-  display: IDisplay|null
-  LobbyId: string;
-  adminId: string;
-  socket: Socket;
 }
 
-const EachMessage: React.FC<Props> = ({display,message,LobbyId,adminId,socket}) => {
+const EachMessage: React.FC<Props> = ({message}) => {
+  const socket = useContext(SocketContext)
+  const display = useContext(DisplayContext)
+  const LobbyId = useContext(LobbyIdContext)
+  const adminId = useContext(AdminIdContext)
   const [active, setActive] = useState(false);
   const [input, setInput] = useState("");
   const [clicked, setClicked] = useState(false);

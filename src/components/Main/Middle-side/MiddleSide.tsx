@@ -1,23 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import MiddleTitle from './components/MiddleTitle'
 import Messages from './components/Messages'
 import Sendmessage from './components/Sendmessage'
-import { Socket } from 'socket.io-client';
 import useFetch from '../../../hooks/useFetch';
 import useMessageSocket from '../../../hooks/useMessageSocket';
 import { IMessage } from '../../../Interface/IMessage';
-import { IDisplay } from '../../../Interface/IDisplay';
+import {AdminIdContext, LobbyIdContext, SocketContext } from '../../../pages/Main';
 
 export interface IMiddleSide{
-  display:IDisplay|null
-  LobbyId:string;
-  adminId:string;
-  socket: Socket;
   title:string|null|undefined
   setIsShown: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const MiddleSide:React.FC<IMiddleSide> = ({title,setIsShown,display,adminId,LobbyId,socket}) => {
+const MiddleSide:React.FC<IMiddleSide> = ({title,setIsShown}) => {
+  const socket = useContext(SocketContext)
+  const LobbyId = useContext(LobbyIdContext)
   const {data:messages,setData:setMessages} = useFetch<IMessage[]|null>
   (`api/lobby/${LobbyId}?page=1&limit=10000000000000`,LobbyId)
   useMessageSocket(socket,setMessages);
@@ -26,7 +23,9 @@ const MiddleSide:React.FC<IMiddleSide> = ({title,setIsShown,display,adminId,Lobb
       if (LobbyId) {
         socket.emit('join-room', LobbyId)
       }
-      socket.off("receive-message").on("receive-message", msg => { 
+      socket.off("receive-message").on("receive-message", msg => {
+        console.log(msg);
+        
         if (msg.lobby_id === LobbyId) {
           setMessages((prev) => (prev?[...prev, msg]:[msg]))
         }
@@ -40,9 +39,9 @@ const MiddleSide:React.FC<IMiddleSide> = ({title,setIsShown,display,adminId,Lobb
 
   return (
     <>
-          <MiddleTitle title={title} setIsShown={setIsShown} display={display} adminId={adminId} />
-          <Messages messages={messages} display={display} LobbyId={LobbyId} adminId={adminId} socket={socket} />
-          <Sendmessage LobbyId={LobbyId} setMessages={setMessages} socket={socket} />
+          <MiddleTitle title={title} setIsShown={setIsShown} />
+          <Messages messages={messages} />
+          <Sendmessage />
     </>
   )
 }

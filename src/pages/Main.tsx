@@ -1,5 +1,5 @@
-import React, { memo, useEffect, useState } from 'react'
-import { io } from 'socket.io-client';
+import React, { createContext, memo, useCallback, useEffect, useState } from 'react'
+import { io, Socket } from 'socket.io-client';
 import Modal from 'react-modal';
 import LeftSide from '../components/Main/Left-side/LeftSide';
 import MiddleSide from '../components/Main/Middle-side/MiddleSide';
@@ -7,12 +7,15 @@ import ModalContainer from '../components/Main/Modal/ModalContainer';
 import useFetch from '../hooks/useFetch';
 import { IDisplay } from '../Interface/IDisplay';
 
-
 interface Props {
   setLogged: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 let socket = io('http://localhost:5000');
+export const SocketContext = createContext<Socket>(socket);
+export const DisplayContext = createContext<IDisplay|null>(null);
+export const LobbyIdContext = createContext<string>('');
+export const AdminIdContext = createContext<string>('');
 
 const Main: React.FC<Props> = ({ setLogged }) => {
   const [title, setTitle] = useState<string | undefined | null>('')
@@ -22,7 +25,14 @@ const Main: React.FC<Props> = ({ setLogged }) => {
   const [isShown, setIsShown] = useState(false)
   const [onlineUser, setOnlineUser] = useState<{ userId: string, socket: string }[]>([])
   const {data:display} = useFetch<IDisplay>('api/user',undefined);
-
+  
+  const clickhandle = (title:string,lobbyId:string,adminId:string,lobbyName:string) => { 
+    setTitle(title)
+    setLobbyId(lobbyId)
+    setAdminId(adminId); 
+    setLobbyName(lobbyName) 
+  }
+  
   useEffect(() => {
     if (display?.id !== '') {
       socket.emit("connected-user", display?.id)
@@ -44,26 +54,31 @@ const Main: React.FC<Props> = ({ setLogged }) => {
     }
   }, [])
 
-
+ 
   return (
-    <main className='main'>
-      <section className='left-side'>
-        <LeftSide display={display} setLogged={setLogged} socket={socket}
-        setTitle={setTitle} title={title} setLobbyId={setLobbyId}
-        setAdminId={setAdminId} setLobbyName={setLobbyName} />
+    <DisplayContext.Provider value={display}>
+    <SocketContext.Provider value={socket}>
+       <main className='main'>
+         <section className='left-side'>
+        <LeftSide  setLogged={setLogged} title={title} setLobbyId={setLobbyId} clickhandle={clickhandle} />
       </section>
+      <LobbyIdContext.Provider value={LobbyId}>
+      <AdminIdContext.Provider value={adminId}>
+
       {
         LobbyId !== '' ?
-          <section className='middle-side'>
-            <MiddleSide display={display} LobbyId={LobbyId} adminId={adminId} socket={socket} title={title} setIsShown={setIsShown} />
+        <section className='middle-side'>
+            <MiddleSide title={title} setIsShown={setIsShown} />
           </section> : <section className='middle-side'></section>
       }
-
       <Modal isOpen={isShown} ariaHideApp={false} className='modal'>
-        <ModalContainer LobbyId={LobbyId} adminId={adminId} display={display}
-          socket={socket} LobbyName={LobbyName} setIsShown={setIsShown} onlineUser={onlineUser} />
+        <ModalContainer LobbyName={LobbyName} setIsShown={setIsShown} onlineUser={onlineUser} />
       </Modal>
+      </AdminIdContext.Provider>
+      </LobbyIdContext.Provider>
     </main>
+   </SocketContext.Provider>
+   </DisplayContext.Provider>
   )
 }
 

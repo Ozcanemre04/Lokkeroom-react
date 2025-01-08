@@ -1,18 +1,18 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useContext, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
-import { Socket } from 'socket.io-client';
 import axiosInstance from '../../../../Interceptor/axiosInstance';
 import { IMessage } from '../../../../Interface/IMessage';
+import { DisplayContext, LobbyIdContext, SocketContext } from '../../../../pages/Main';
 
-interface Props{
-  socket: Socket
-  LobbyId:string; 
-  setMessages: React.Dispatch<React.SetStateAction<IMessage[]|null >> ;
-}
 
-const Sendmessage:React.FC<Props> = ({LobbyId,socket}) => {
+
+const Sendmessage:React.FC = () => {
+const socket = useContext(SocketContext) 
+const display = useContext(DisplayContext)
+const LobbyId = useContext(LobbyIdContext)
 const [message,setMessage] =useState('')
+
  function handleChange(e:React.ChangeEvent<HTMLInputElement>){
   setMessage(e.target.value)
  }
@@ -24,7 +24,7 @@ const [message,setMessage] =useState('')
   })
   .then(res=>{
     if(res.data.lobby_id===LobbyId){
-      socket.emit("send-message",res.data)
+      socket.emit("send-message",{id: res.data.id, message: res.data.message, author_id: res.data.author_id, lobby_id: res.data.lobby_id,name:display?.name})
     }
     setMessage("")
   })
@@ -34,7 +34,7 @@ const [message,setMessage] =useState('')
     <section className='text'>
       <form action="">
          <input type="text" onChange={handleChange} value={message} />
-      <button onClick={handleClick}><FontAwesomeIcon icon={faPlay} /></button>
+      <button onClick={handleClick} disabled={!message}><FontAwesomeIcon icon={faPlay} /></button>
       </form>
       
     </section>

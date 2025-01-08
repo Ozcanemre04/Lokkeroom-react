@@ -1,16 +1,17 @@
 import { faUserPlus, } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { memo } from 'react'
-import { IDisplay } from '../../../../Interface/IDisplay'
+import React, { memo, useContext } from 'react'
+import { AdminIdContext, DisplayContext } from '../../../../pages/Main'
 
 interface Title{
     title:string|null|undefined
     setIsShown: React.Dispatch<React.SetStateAction<boolean>>
-    adminId:string;
-    display: IDisplay|null
 }
 
-const MiddleTitle:React.FC<Title> = ({title,setIsShown,display,adminId}) => {   
+const MiddleTitle:React.FC<Title> = ({title,setIsShown}) => {
+  const display = useContext(DisplayContext)
+  const adminId = useContext(AdminIdContext)
+
   return (
     <div className='title'>
       <h1>{title}</h1>
