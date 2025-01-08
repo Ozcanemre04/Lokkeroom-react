@@ -2,7 +2,6 @@ import React, { memo, useContext, useState } from 'react'
 import axiosInstance from '../../../../Interceptor/axiosInstance';
 import { SocketContext } from '../../../../pages/Main';
 
-
 const CreateLobby:React.FC = () => {
 const[input,setInput] = useState('')
 const[error,setError] = useState('')

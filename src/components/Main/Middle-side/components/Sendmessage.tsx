@@ -2,10 +2,7 @@ import React, { memo, useContext, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import axiosInstance from '../../../../Interceptor/axiosInstance';
-import { IMessage } from '../../../../Interface/IMessage';
 import { DisplayContext, LobbyIdContext, SocketContext } from '../../../../pages/Main';
-
-
 
 const Sendmessage:React.FC = () => {
 const socket = useContext(SocketContext) 

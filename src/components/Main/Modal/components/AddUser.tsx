@@ -1,5 +1,4 @@
 import React, { memo, useContext, useState } from 'react'
-import { Socket } from 'socket.io-client';
 import axiosInstance from '../../../../Interceptor/axiosInstance';
 import { AdminIdContext, LobbyIdContext, SocketContext } from '../../../../pages/Main';
 
